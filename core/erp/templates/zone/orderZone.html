@@ -1,0 +1,27 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'zone/js/orderZone.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/DataTables/RowReorder-1.2.8/RowReorder-1.2.8/css/rowReorder.bootstrap.min.css' %}">
+    <script src="{% static 'lib/DataTables/RowReorder-1.2.8/RowReorder-1.2.8/js/dataTables.rowReorder.min.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%">Nro</th>
+        <th scope="col" style="width: 5%">Pos</th>
+        <th scope="col" style="width: 35%">Nombre</th>
+        <th scope="col" style="width: 35%">Dirección</th>
+        <th scope="col" style="width: 10%">Cant</th>
+        <th scope="col" style="width: 20%">Abono</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

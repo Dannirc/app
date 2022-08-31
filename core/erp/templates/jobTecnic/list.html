@@ -1,0 +1,29 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'lib/datatables-1.10.20/plugins/dataRender/datetime.js' %}"></script>
+    <script src="{% static 'lib/moment-2.25.3/moment.js' %}"></script>
+    <script src="{% static 'jobTecnic/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 10%">Fecha</th>
+        <th scope="col" style="width: 20%">Zona</th>
+        <th scope="col" style="width: 20%">Tecnico</th>
+        <th scope="col" style="width: 5%">Clientes</th>
+        <th scope="col" style="width: 5%">Equipos</th>
+        <th scope="col" style="width: 15%">Facturado</th>
+        <th scope="col" style="width: 15%">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

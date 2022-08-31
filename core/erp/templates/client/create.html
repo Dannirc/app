@@ -1,0 +1,135 @@
+{% extends 'form.html' %}
+
+{% block field_enable %}
+
+    <div class="form-group">
+        <div class="custom-control custom-switch">
+            {% for field in form.visible_fields %}
+                {% if field.label == 'Habilitado' %}
+                    {{ field }}
+                    <label class="custom-control-label" for="id_client-enable" id="label">{{ field.label }}</label>
+                    <input type="hidden" name="enableStatus" id="enableStatus" value="{{ field.value }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="custom-control custom-switch">
+            {% for field in form.visible_fields %}
+                {% if field.label == 'Activado' %}
+                    {{ field }}
+                    <label class="custom-control-label" for="id_client-active" id="label2">{{ field.label }}</label>
+                    <input type="hidden" name="activeStatus" id="activeStatus" value="{{ field.value }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    <script>
+        {#script para el switch de cliente habilitado#}
+        var status;
+        let x = document.getElementById("enableStatus").value;
+        console.log(x);
+        var label = document.querySelector('#label');
+
+        if (x === 'False') {
+            label.textContent = 'Deshabilitado';
+        }
+
+        $('#id_client-enable').click(function () {
+            if (this.checked) {
+                this.value = true;
+                status = 'true';
+                label.textContent = 'Habilitado';
+            } else {
+                this.value = false;
+                status = 'false';
+                label.textContent = 'Deshabilitado';
+            }
+            console.log(this.value);
+        })
+
+                {#script para el switch de cliente habilitado#}
+        var status2;
+        let x2 = document.getElementById("activeStatus").value;
+        console.log(x2);
+        var label2 = document.querySelector('#label2');
+
+        if (x2 === 'False') {
+            label2.textContent = 'Suspendido';
+        }
+
+        $('#id_client-active').click(function () {
+            if (this.checked) {
+                this.value = true;
+                status2 = 'true';
+                label2.textContent = 'Activado';
+            } else {
+                this.value = false;
+                status2 = 'false';
+                label2.textContent = 'Suspendido';
+            }
+            console.log(this.value);
+        })
+
+    </script>
+
+    <script>
+        {#funcion para obtener las zonas#}
+
+        function getZone(tecnic_id, zone_id) {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'search_zone',
+                    'id': tecnic_id,
+                },
+                success: function (data) {
+
+                    document.getElementById('id_client-zone').innerHTML = '<option value="" disabled>Seleccione Zona</option>'
+                    data.forEach(function (elemento) {
+                        if (zone_id === elemento.id.toString()) {
+                            document.getElementById('id_client-zone').innerHTML += '<option value="' + elemento.id + '" selected>' + elemento.name + '</option>'
+                        } else {
+                            document.getElementById('id_client-zone').innerHTML += '<option value="' + elemento.id + '">' + elemento.name + '</option>'
+                        }
+                    });
+                },
+                error: function () {
+                    console.log("No se ha podido obtener la información de zonas");
+                }
+            });
+        }
+
+        {#inicializo campos del form solo si es un cliente nuevo#}
+        action = document.getElementsByName("action")[0].value
+        if (action === 'add') {
+            document.getElementById('id_client-zone').innerHTML = '<option value="" disabled selected>----------</option>'
+            getZone(document.getElementById('id_client-tecnic').value, "")
+        }
+        if (action === 'edit') {
+            selected_zone_id = document.getElementById('id_client-zone').value
+            getZone(document.getElementById('id_client-tecnic').value, selected_zone_id)
+        }
+
+
+        {#cambios en el select nombre del tecnico#}
+        $('#id_client-tecnic').on('change', function () {
+            num = parseInt(document.getElementById('id_client-tecnic').value)
+            {#compruebo si el select del tecnico es valido y llamo a la funcion getZone#}
+            if (isNaN(num)) {
+                document.getElementById('id_client-zone').innerHTML = '<option value="" disabled selected>----------</option>'
+            } else {
+                getZone(document.getElementById('id_client-tecnic').value, "")
+            }
+        })
+
+    </script>
+
+{% endblock %}

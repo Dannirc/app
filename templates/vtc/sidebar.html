@@ -1,0 +1,207 @@
+{% load static %}
+<aside class="main-sidebar sidebar-light-primary elevation-4">
+    <a href="#" class="brand-link">
+        <img src="{% static 'img/crm-logo-2.jpg' %}"
+             alt="AdminLTE Logo"
+             class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">GESTIÓN</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ request.user.get_image }}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header">Gestion</li>
+                <li class="nav-item">
+                    <a href="{% url 'erp:dashboard' %}" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Menú Principal
+                        </p>
+                    </a>
+                </li>
+                {# menu clientes#}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-address-book"></i>
+                        <p>
+                            Clientes
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none; padding-left: 30px">
+                        <li class="nav-item">
+                            <a href="{% url 'erp:client_list' %}" class="nav-link">
+                                <i class="fas fa-address-book nav-icon"></i>
+                                <p>Agenda</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:client_saldos' %}" class="nav-link">
+                                <i class="nav-icon fas fa-search-dollar"></i>
+                                <p>Listado de Saldos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:equipRemove_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-ban"></i>
+                                <p>Listado de Retiros</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:equipSuspend_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-clock"></i>
+                                <p>Listado de Suspendidos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {# menu gestion#}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tools"></i>
+                        <p>
+                            Gestion
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none; padding-left: 30px">
+                        <li class="nav-item">
+                            <a href="{% url 'erp:abono_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-money-check-alt"></i>
+                                <p>Abonos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:category_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-clipboard-list"></i>
+                                <p>Categorias</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:product_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-boxes"></i>
+                                <p>Productos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>Empresa</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {# menu facturacion#}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-balance-scale"></i>
+                        <p>
+                            Facturación
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none; padding-left: 30px">
+                        <li class="nav-item">
+                            <a href="{% url 'erp:invoice_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                                <p>Servicios Mensuales</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:sale_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <p>Ventas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'sale_report' %}" class="nav-link">
+                                <i class="nav-icon fas fa-chart-line"></i>
+                                <p>Reportes</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {# menu tecnicos#}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>
+                            Técnicos
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none; padding-left: 30px">
+                        <li class="nav-item">
+                            <a href="{% url 'erp:jobTecnic_create' %}" class="nav-link">
+                                <i class="nav-icon fas fa-briefcase"></i>
+                                <p>Cargar trabajo</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:pay_create' %}" class="nav-link">
+                                <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                <p>Cargar Cobranza</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:clientPending_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-business-time"></i>
+                                <p>Clientes Pendientes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:pay_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>Historial de Cobranzas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:tecnic_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-user-tie"></i>
+                                <p>Listado de Técnicos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {# menu zonas#}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-network-wired"></i>
+                        <p>
+                            Zonas
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none; padding-left: 30px">
+                        <li class="nav-item">
+                            <a href="{% url 'erp:zone_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-list-ol"></i>
+                                <p>Listado de Zonas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:jobTecnicMonthPlanning_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p>Planificación de Zonas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'erp:jobTecnic_list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>Historial de Zonas</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

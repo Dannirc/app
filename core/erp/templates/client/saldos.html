@@ -1,0 +1,86 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{% block head_list %}
+    <script src="{% static 'client/js/saldos.js' %}"></script>
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+
+    {#   lib datetimerange#}
+    <script type="text/javascript" src="{% static 'lib/moment-2.25.3/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/daterangepicker-3.1/daterangepicker.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/daterangepicker-3.1/daterangepicker.css' %}"/>
+
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-search"></i>
+                {{ title }} | {{ date_now }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <label for="select_tecnic">Tecnico: </label>
+            <select class="form-control" name="select_tecnic" id="select_tecnic">
+            </select>
+            <br>
+            <label for="select_zone">Zona: </label>
+            <select class="form-control small" name="select_zone" id="select_zone">
+                <option>Todos</option>
+            </select>
+            <br>
+            <label for="select_type">Tipo de pago: </label>
+            <select class="form-control small" name="select_type" id="select_pay">
+                <option value="0">Todos</option>
+                <option value="Ef">Efectivo</option>
+                <option value="Tr">Transferencia</option>
+            </select>
+            <br>
+            <label for="select_type">Rango de Fechas: </label>
+            <input type="text" class="form-control small" name="input_date" id="input_date"/>
+
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary btnSaldo"><i class="fas fa-address-book"></i>
+                {{ entity }}
+            </a>
+            <a href="{{ list_url }}" class="btn btn-success"><i class="fas fa-sync"></i>
+                Actualizar
+            </a>
+            <a id="button_print" class="btn btn-info"><i class="fas fa-print"></i>
+                Imprimir
+            </a>
+        </div>
+    </div>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title text-uppercase text-bold">
+                Clientes con saldos pendientes
+            </h3>
+        </div>
+        <div class="card card-body">
+            <table class="table table-striped" id="data">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Cant</th>
+                    <th>Deuda</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% block rows %}
+
+                {% endblock %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

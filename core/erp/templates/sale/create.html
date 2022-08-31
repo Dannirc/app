@@ -1,0 +1,133 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    {#    jquery ui (para utilizar el autocomplete en el buscador) #}
+    <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    {#    libs select2#}
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+    {#    libs moments y tempusdominus#}
+    <script src="{% static 'lib/moment-2.25.3/moment-with-locales.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <link href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet"/>
+    {#    lib touchspin#}
+    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+    {#    functions#}
+    <script src="{% static 'sale/js/form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {#    debe estar dentro de un formulario para que se envien los datos a la views por el metodo post#}
+    <form method="post">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-search"></i>
+                    {{ title }} | {{ date_now }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-boxes"></i> Detalle de Productos</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Buscador de Productos</label>
+                                    <div class="input-group">
+                                        <select class="form-control select2" style="width: 100%" name="search">
+
+                                        </select>
+
+{#                                        <input type="text" class="form-control" name="search"#}
+{#                                               placeholder="Ingrese un Producto" autocomplete="off">#}
+{#                                        <span class="input-group-append">#}
+{#                                        <button type="button" class="btn btn-danger btn-flat btnClearSearch">#}
+{#                                            <i class="fas fa-times"></i>#}
+{#                                        </button>#}
+                                    </span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <button type="button" class="btn btn-danger btn-xs btn-flat btnRemoveAll">
+                                    <i class="fas fa-trash"></i> Eliminar todos los productos
+                                </button>
+                                <hr>
+                                <table class="table" id="tblProducts">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 5%"></th>
+                                        <th scope="col" style="width: 25%">Producto</th>
+                                        <th scope="col" style="width: 25%">Categoría</th>
+                                        <th scope="col" style="width: 15%">PVP</th>
+                                        <th scope="col" style="width: 15%">Cantidad</th>
+                                        <th scope="col" style="width: 10%">Subtotal</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Datos de la Factura</h3>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" name="action" value="{{ action }}">
+                                <div class="form-group">
+                                    <label>Fecha de Venta:</label>
+                                    {{ form.date_joined }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Cliente:</label>
+                                    {{ form.cli }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Subtotal:</label>
+                                    {{ form.subtotal }}
+                                </div>
+                                <div class="form-group">
+                                    <label>IVA:</label>
+                                    {{ form.iva }}
+                                </div>
+                                <div class="form-group">
+                                    <label>IVA Calculado:</label>
+                                    <input type="text" class="form-control" readonly name="ivacalc" value="0.00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Total a pagar:</label>
+                                    {{ form.total }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-flat"><i class="fas fa-save"></i>
+                    Guardar {{ entity }}
+                </button>
+                <a href="{{ list_url }}" class="btn btn-danger btn-flat"><i class="fas fa-times"></i>
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{#{% block javascript %}#}
+{#    <script>#}
+{#        $(function () {#}
+{#            $('#date_joined').datetimerpicker();#}
+{#        });#}
+{#    </script>#}
+{#{% endblock %}#}

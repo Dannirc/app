@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+
+        * {
+            color: black;
+        }
+
+        body {
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
+
+        .name-company {
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .sale-date-joined {
+            font-size: 15px;
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        table thead tr th {
+            border: 1px solid black !important;
+            padding: 3px;
+        }
+
+        table tbody tr td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        .img-logo {
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <img src="{% static 'img/logo3.png' %}" class="img-fluid d-block mx-auto img-logo">
+    <h1 class="name-company">{{ comp.name }}</h1>
+    <p class="text-center">
+        CUIT: {{ comp.cuit }}<br>
+        {{ comp.address }}<br>
+        Teléfono: {{ comp.phone }}<br>
+        Web: {{ comp.web }}<br>
+    </p>
+    <hr>
+    <p>
+    <h3 class="sale-date-joined"><b>Fecha:</b> {{ date|date:'d-m-Y' }}</h3>
+    <h3 class="sale-date-joined"><b>Orden de Retiro N°:</b> {{ equipRemove.id }}</h3><br>
+    <b>Cliente:</b> {{ equipRemove.cli.name }}<br>
+    <b>Dirección:</b> {{ equipRemove.cli.address }}<br>
+    <b>Telefono:</b> {{ equipRemove.cli.phone }}<br>
+    </p>
+    <br>
+    <table class="table" style="width: 100%;">
+        <thead>
+        <tr style="border: 1px solid black;">
+            <th style="width: 80%;">Equipos a Retirar</th>
+            <th style="width: 20%; text-align: center">Cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td> Odorizadores</td>
+            <td class="text-center">{{ equipRemove.cantOdo }}</td>
+        </tr>
+        <tr>
+            <td> Aerosoles</td>
+            <td class="text-center">{{ equipRemove.cantAer }}</td>
+        </tr>
+        <tr>
+            <td> Goteos</td>
+            <td class="text-center">{{ equipRemove.cantGot }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <br>
+                <p>OBSERVACIONES: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                    _ _ _ _ _ _</p>
+                <p>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                    _ _ _ _ _ _ _ _</p>
+                <p>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                    _ _ _ _ _ _ _ _</p>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br>
+                <br>
+                <br>
+                <p class="text-left">Firma: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</p>
+                <br>
+                <p class="text-left">Aclaracion: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</p>
+            </td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

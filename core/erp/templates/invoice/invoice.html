@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+
+        * {
+            color: black;
+        }
+
+        body {
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
+
+        .name-company {
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .sale-date-joined {
+            font-size: 15px;
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        table thead tr th {
+            border: 1px solid black !important;
+            padding: 3px;
+        }
+
+        table tbody tr td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        .img-logo {
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <img src="{% static 'img/logo3.png' %}" class="img-fluid d-block mx-auto img-logo">
+    <h1 class="name-company">{{ comp.name }}</h1>
+    <p class="text-center">
+        CUIT: {{ comp.cuit }}<br>
+        {{ comp.address }}<br>
+        Teléfono: {{ comp.phone }}<br>
+        Web: {{ comp.web }}<br>
+    </p>
+    <hr>
+    <br>
+    <p>
+    <h3 class="sale-date-joined"><b>Fecha de venta:</b> {{ invoice.date_joined|date:'c' }}</h3>
+    <h3 class="sale-date-joined"><b>Nro de Factura:</b> {{ invoice.id }}</h3><br>
+    <b>Cajero:</b> Empleado de Prueba<br>
+    <b>Cliente:</b> {{ invoice.cli.name }}<br>
+    <b>Cuit:</b> {{ invoice.cli.cuit }}<br>
+    <b>Dirección:</b> {{ invoice.cli.address }}<br>
+    </p>
+    <br>
+    <table class="table" style="width: 100%;">
+        <thead>
+        <tr style="border: 1px solid black;">
+            <th style="width: 50%;">Servicio</th>
+            <th style="width: 10%;">Cantidad</th>
+            <th style="width: 20%;">P.Unitario</th>
+            <th style="width: 20%;" class="text-right">Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for det in invoice.detinvoice_set.all %}
+            <tr>
+                <td> Odorizador </td>
+                <td class="text-center">{{ det.cant_odo }}</td>
+                <td class="text-center">{{ det.price_odo|floatformat:2 }}</td>
+                <td class="text-center">-</td>
+            </tr>
+            <tr>
+                <td> Aerosoles </td>
+                <td class="text-center">{{ det.cant_aer }}</td>
+                <td class="text-center">{{ det.price_aer|floatformat:2 }}</td>
+                <td class="text-center">-</td>
+            </tr>
+            <tr>
+                <td> Goteos </td>
+                <td class="text-center">{{ det.cant_got }}</td>
+                <td class="text-center">{{ det.price_got|floatformat:2 }}</td>
+                <td class="text-center">-</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <td colspan="3" class="text-right"><b>Subtotal</b></td>
+            <td class="text-right">{{ invoice.subtotal|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right"><b>Iva %</b></td>
+            <td class="text-right">{{ invoice.iva|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right"><b>Total a pagar</b></td>
+            <td class="text-right">{{ invoice.total|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <p class="text-uppercase font-weight-bold text-center">
+                    <br>Total de Equipos {{ invoice.detsale_set.all.count }}</p>
+                <br>
+                <p class="font-italic text-center">
+                    !Gracias por su preferencia!<br>
+                    Una vez que usted a recibido el pedido<br>
+                    No hay derecho a reclamo ni devolución del producto<br>
+                    Que tenga un excelente día
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'equipSuspend/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%">ID</th>
+        <th scope="col" style="width: 10%">Fecha</th>
+        <th scope="col" style="width: 35%">Nombre</th>
+        <th scope="col" style="width: 10%">Od</th>
+        <th scope="col" style="width: 10%">Aer</th>
+        <th scope="col" style="width: 10%">Got</th>
+        <th scope="col" style="width: 10%">Alta</th>
+        <th scope="col" style="width: 10%">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

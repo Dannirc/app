@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+
+        * {
+            color: black;
+        }
+
+        body {
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
+
+        .name-company {
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .sale-date-joined {
+            font-size: 15px;
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        table thead tr th {
+            border: 1px solid black !important;
+            padding: 3px;
+        }
+
+        table tbody tr td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        .img-logo {
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <img src="{% static 'img/logo3.png' %}" class="img-fluid d-block mx-auto img-logo">
+    <h1 class="name-company">{{ comp.name }}</h1>
+    <p class="text-center">
+        CUIT: {{ comp.cuit }}<br>
+        {{ comp.address }}<br>
+        Teléfono: {{ comp.phone }}<br>
+        Web: {{ comp.web }}<br>
+    </p>
+    <hr>
+    <br>
+
+    <h3 class="sale-date-joined"><b>Fecha:</b> {{ dateStart }} - {{ dateEnd }}</h3>
+    <b>Tecnico:</b> {{ tecnic }} <br>
+    <b>Zona:</b> {{ zone }} <br>
+    <b>Tipo de Pago:</b> {{ typePay }}<br>
+
+    <br>
+    <table class="table" style="width: 100%;">
+        <thead>
+        <tr style="border: 1px solid black;">
+            <th style="width: 5%;" class="text-center">Id:</th>
+            <th style="width: 30%;">Cliente: {{ invoice.address }}</th>
+            <th style="width: 20%;">Dirección</th>
+            <th style="width: 20%;">Telefono</th>
+            <th style="width: 5%;" class="text-right">Cant</th>
+            <th style="width: 20%;" class="text-right">Deuda</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cli in data %}
+            <tr>
+                <td class="text-right">{{ cli.id }}</td>
+                <td class="text-left">{{ cli.name }}</td>
+                <td class="text-left">{{ cli.address }}</td>
+                <td class="text-left">{{ cli.phone }}</td>
+                <td class="text-right">{{ cli.cant }}</td>
+                <td class="text-right">$ {{ cli.should }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right"><b>Total deudas</b></td>
+            {#            <td class="text-right">{{ invoice.total|floatformat:2 }}</td>#}
+            <td class="text-right">$ {{ total_should }}</td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <br>
+                <p class="text-capitalize font-italic text-center">
+                    Total de clientes con deudas: {{ data | length }}
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

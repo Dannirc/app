@@ -1,0 +1,43 @@
+{% extends 'form.html' %}
+
+{% block field_enable %}
+
+    <div class="form-group">
+        <div class="custom-control custom-switch">
+            {{ form.enable }}
+            <label class="custom-control-label" for="id_enable" id="label">{{ form.enable.label }}</label>
+            <input type="hidden" name="enableStatus" id="enableStatus" value="{{ form.enable.value }}">
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    <script>
+        {#script para el switch de cliente habilitado#}
+        var status;
+        let x = document.getElementById("enableStatus").value;
+        console.log(x);
+        var label = document.querySelector('#label');
+
+        if (x === 'False'){
+            label.textContent = 'Deshabilitado';
+        }
+
+        $('#id_enable').click(function () {
+            if (this.checked) {
+                this.value = true;
+                status = 'true';
+                label.textContent = 'Habilitado';
+            } else {
+                this.value = false;
+                status = 'false';
+                label.textContent = 'Deshabilitado';
+            }
+            console.log(this.value);
+        })
+    </script>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'zone/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 20%">Nombre</th>
+        <th scope="col" style="width: 20%">Tecnico</th>
+        <th scope="col" style="width: 20%">Descripción</th>
+        <th scope="col" style="width: 15%">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+    <div class="modal fade" id="myModelZone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-shopping-cart"></i> Planilla de Zona</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="tblZone">
+                        <thead>
+                        <tr>
+                            <th>Posición</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Abono</th>
+                            <th>Cantidad</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{#Este bloque contiene el formulario dentro del body#}
+{% block content %}
+    <form method="post" action="erp">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-trash"></i>
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                {#            variable action recibida del context data para luego enviarla a a traves del metodo post#}
+                {#            necesario para utilizar la tecnologia ajax#}
+                <input type="hidden" name="action" value="{{ action }}">
+                {#            itera los campos del formulario para luego personalizar los campos#}
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al crear un cliente</h5>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="alert alert-danger alert-dismissible">
+                <h5><i class="icon fas fa-ban"></i> Notificación!</h5>
+                {% if object.id %}
+                ¿Estas seguro de eliminar el registro Nro: {{ object.id }}?
+                {% else %}
+                    ¿Estas seguro de eliminar todos los registros?
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btnTest">
+                    <i class="fas fa-save"></i> Si, Aceptar
+                </button>
+                <a href="{{ list_url }}" class="btn btn-info btnTest">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        {#codigo ajax para eliminar un objeto de la base de datos#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            {#ver como funciona el FormData#}
+            var parameters = new FormData(this);
+            console.log(parameters);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de eliminar el siguiente elemento?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'client/js/list.js' %}"></script>
+{% endblock %}
+
+{% block enableClients %}
+    <div class="form-group" style="text-align: right">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" name="client-enable" class="custom-control-input" autocomplete="off" value="true"
+                   id="id_clients-enable" checked="">
+            <label class="custom-control-label" for="id_clients-enable" id="label2">Solo Clientes Habilitados</label>
+        </div>
+    </div>
+    <hr>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%">ID</th>
+        <th scope="col" style="width: 35%">Nombre</th>
+        <th scope="col" style="width: 20%">Dirección</th>
+        <th scope="col" style="width: 10%">Cuit</th>
+        <th scope="col" style="width: 10%">O, A, G</th>
+        <th scope="col" style="width: 5%">Habilitado</th>
+        <th scope="col" style="width: 15%">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+    <div class="modal" id="myModelDet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="myModelDetContent">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-list-ol"></i> Resumen cuenta del cliente: <span
+                            id="cliModalResumen"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-head-fixed">
+                        <thead>
+                        <tr>
+                            <th style="width: 25%">Fecha</th>
+                            <th style="width: 25%">Nro Fc</th>
+                            <th style="width: 25%">Total</th>
+                            <th style="width: 25%">Estado</th>
+                        </tr>
+                        </thead>
+                        <tbody id="myModelDet_tbody">
+                        {#                    body agregado a traves de javascript#}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="serviceDown" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="serviceDownContent">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-thumbs-down"></i> Retiro / Suspensión de Cliente: <span
+                            id="serviceDownClient"></span></h5>
+                    <input type="hidden" id="serviceDownClientId" value="">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="selectOption">¿Desea retirar o suspender el servicio?</label>
+                    <select name="selectDown" id="selectDown">
+                        <option value="retirar">Retirar</option>
+                        <option value="suspender">Suspender</option>
+                    </select>
+                    <label for="selectCantOdo">Odorizadores: </label>
+                    <select name="selectCantOdo" id="selectCantOdo">
+                    </select>
+                    <label for="selectCantAer">Aerosoles: </label>
+                    <select name="selectCantAer" id="selectCantAer">
+                    </select>
+                    <label for="selectCantGot">Goteos: </label>
+                    <select name="selectCantGot" id="selectCantGot">
+                    </select>
+                    <a id="serviceDownConfirm" class="btn btn-primary">Finalizar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="clientPending" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="serviceDownContent">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-wrench"></i> Orden de Mantenimiento de Cliente: <span
+                            id="clientPendingName"></span></h5>
+                    <input type="hidden" id="clientPendingId" value="">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="inputDate">Fecha a realizar: </label>
+                    <input class="form-control" type="date" id="inputDate">
+                    <br>
+                    <label for="textArea">Observaciones: </label>
+                    <textarea class="form-control" placeholder="(Opcional)" id="textArea"></textarea>
+                    <br>
+                    <a id="clientPendingConfirm" class="btn btn-primary">Finalizar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        {#script para el switch de cliente habilitado#}
+
+
+    </script>
+
+{% endblock %}

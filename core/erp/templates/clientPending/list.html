@@ -1,0 +1,36 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'clientPending/js/list.js' %}"></script>
+{% endblock %}
+
+{% block filterDataTable %}
+    <div class="card-body">
+        <label for="select_tecnic">Tecnico: </label>
+        <select class="form-control" name="select_tecnic" id="select_tecnic">
+        </select> <br>
+        <button type="button" class="btn btn-secondary" id="searchClientPending">Buscar</button>
+        <button type="button" class="btn btn-info" id="button_print">Imprimir</button>
+        <br>
+        <a type="button" class="btn btn-xs btn-danger float-right" href="{{ delete_all_url }}">Eliminar Todos los Clientes Pendientes</a>
+    </div>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 10%">Fecha</th>
+        <th scope="col" style="width: 20%">Nombre</th>
+        <th scope="col" style="width: 10%">Tecnico</th>
+        <th scope="col" style="width: 10%">Fecha a realizar</th>
+        <th scope="col" style="width: 35%">Motivo</th>
+        <th scope="col" style="width: 15%">Opciones</th>
+    </tr>
+{% endblock %}
+
+
+
+{% block javascript %}
+
+{% endblock %}

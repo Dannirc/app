@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+
+        * {
+            color: black;
+        }
+
+        body {
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
+
+        .name-company {
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .sale-date-joined {
+            font-size: 15px;
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        table thead tr th {
+            font-size: 12px;
+            border: 1px solid black !important;
+            padding: 3px;
+        }
+
+        table tbody tr td {
+            font-size: 12px;
+            border: 1px solid black;
+            padding: 3px;
+            text-transform: capitalize;
+        }
+
+        .img-logo {
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <img src="{% static 'img/logo3.png' %}" class="img-fluid d-block mx-auto img-logo">
+    <p class="text-center text-uppercase text-bold">{{ title }}</p>
+    <hr>
+    <br>
+
+    <h3 class="sale-date-joined"><b>Fecha:</b> {{ date }}</h3>
+    <b>Tecnico:</b> {{ tecnic }} <br>
+
+    <br>
+    <table class="table" style="width: 100%;">
+        <thead>
+        <tr style="border: 1px solid black;">
+            <th style="width: 10%;" class="text-center">Fecha</th>
+            <th style="width: 27%;" class="text-center">Cliente</th>
+            <th style="width: 27%;" class="text-center">Observación</th>
+            <th style="width: 8%;" class="text-center">Equipos</th>
+            <th style="width: 8%;" class="text-center">Deuda</th>
+            <th style="width: 20%;" class="text-center">Firma</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in data %}
+            <tr>
+                <td class="text-center">{{ i.date }}</td>
+                <td>
+                    <span class="text-uppercase">{{ i.cli.name }}</span>
+                    <br>
+                    {{ i.cli.address }}
+                </td>
+                <td>
+                    Obs: {% if  i.observation != None %}
+                    {{ i.observation }}
+                {% endif %}
+                    <br>
+                    Fecha a Realizar: {% if  i.dateToMake != None %}
+                    {{ i.dateToMake }}
+                {% endif %}
+                </td>
+                <td class="text-right">{{ i.cant_odo }}</td>
+                <td class="text-right"> {{ i.should }} </td>
+                <td class="text-right"></td>
+            </tr>
+        {% endfor %}
+        <tr>
+
+        </tr>
+        <tr>
+            <td colspan="6">
+                <br>
+                <p class="text-capitalize font-italic text-center">
+                    Total de clientes Pendientes: {{ data | length }}
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

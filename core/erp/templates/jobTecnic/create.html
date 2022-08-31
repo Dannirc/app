@@ -1,0 +1,204 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+    <title>Bootstrap Dual Listbox</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'lib/bootstrap-duallistbox-4.0.2/src/bootstrap-duallistbox.css' %}">
+    {#    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"#}
+    {#            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"#}
+    {#            crossorigin="anonymous"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="{% static 'lib/bootstrap-duallistbox-4.0.2/src/jquery.bootstrap-duallistbox.js' %}"></script>
+    <script src="{% static 'jobTecnic/js/form.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="" enctype="multipart/form-data" name="form">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {% if action == 'add' %}
+                        <i class="fas fa-plus-circle"></i>
+                    {% else %}
+                        <i class="fas fa-edit"></i>
+                    {% endif %}
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+                <input type="hidden" name="datosTabla" value="" id="datosTabla">
+                <input type="hidden" name="clientRealizedList" value="" id="clientRealizedList">
+
+                <label for="date">Fecha de Trabajo: </label>
+                <input type="date" class="form-control" id="date" name="date" required><br>
+                <label for="select_tecnic">Tecnico: </label>
+                <select class="form-control" name="select_tecnic" id="select_tecnic">
+                </select>
+                <br>
+                <label for="select_zone">Zona: </label>
+                <select class="form-control small" name="select_zone" id="select_zone">
+                </select>
+                <br>
+
+                {#                modal para clientes no realizados de la zona#}
+                <div class="modal" id="myModelDet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="fas fa-list-ol"></i> Seleccione clientes no
+                                    realizados: <span
+                                            id="cliModalResumen"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <select multiple="multiple" size="10" name="duallistbox_demo1[]"
+                                        title="duallistbox_demo1[]"
+                                        id="duallistbox_demo1[]">
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Guardar"
+                                        id="myModelDetButton">
+                                    Siguiente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#                modal para clientes pendientes realizados#}
+                <div class="modal" id="myModelCliPend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="fas fa-list-ol"></i> Seleccione clientes pendientes
+                                    realizados: <span
+                                            id="cliModalResumen"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <select multiple="multiple" size="10" name="duallistbox_cliPend"
+                                        title="duallistbox_cliPend"
+                                        id="duallistbox_cliPend">
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Guardar"
+                                        id="myModelCliPendButton">
+                                    Siguiente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {#                modal para lista de clientes pendientes#}
+                <div class="modal" id="myModelCliPendList" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="fas fa-list-ol"></i> Detalle de Clientes pendientes:
+                                    <span
+                                            id="cliModalResumen"></span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Lista de Clientes pendientes: </label>
+                                <table class="table" id="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Cliente</th>
+                                        <th scope="col">Motivo</th>
+                                        <th scope="col">Fecha a realizar</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center">No se seleccionaron clientes
+                                            pendientes
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" aria-label="Guardar">
+                                    Finalizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                {#                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>#}
+                {#                    Guardar {{ entity }}#}
+                {#                </button>#}
+                <a id="registerJob" class="btn btn-secondary"><i class="fas fa-list"></i> Registrar {{ entity }}</a>
+                <a href="{{ list_url }}" class="btn btn-danger "><i class="fas fa-times"></i>
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        {#codigo para la notificacion sweetAlert#}
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {#coontrolando errores provenientes del forms que no pertenecen al componente#}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                text: errors,
+                confirmButtonText: 'Reintentar'
+            });
+        {% endif %}
+
+        {#codigo ajax para acceder al evento del boton submit (guardar registro) del formulario form#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            console.log(parameters);
+            {#parameters.append("enable", status);#}
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de actualizar el siguiente elemento?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+
+    </script>
+
+{% endblock %}

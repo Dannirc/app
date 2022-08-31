@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+
+        * {
+            color: black;
+        }
+
+        body {
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
+
+        .name-company {
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .sale-date-joined {
+            font-size: 15px;
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        table thead tr th {
+            border: 1px solid black !important;
+            padding: 3px;
+        }
+
+        table tbody tr td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        .img-logo {
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <img src="{% static 'img/logo3.png' %}" class="img-fluid d-block mx-auto img-logo">
+    <h1 class="name-company">{{ comp.name }}</h1>
+    <p class="text-center">
+        CUIT: {{ comp.cuit }}<br>
+        {{ comp.address }}<br>
+        Teléfono: {{ comp.phone }}<br>
+        Web: {{ comp.web }}<br>
+    </p>
+    <hr>
+    <br>
+    <p>
+    <h3 class="sale-date-joined"><b>Fecha de Cobranza:</b> {{ pay.date_pay }}</h3>
+    <h3 class="sale-date-joined"><b>Nro de Cobranza:</b> {{ pay.id }}</h3><br>
+    <b>Cobrador:</b> {{ pay.tecnic }}<br>
+    <b>Zona Realizada:</b> {{ pay.zone }}<br>
+    </p>
+    <br>
+    <table class="table" style="width: 100%;">
+        <thead>
+        <tr style="border: 1px solid black;">
+            <th style="width: 5%;">Nro</th>
+            <th style="width: 30%;">Cliente</th>
+            <th style="width: 15%;">Tipo</th>
+            <th style="width: 10%;">Nro Fc</th>
+            <th style="width: 20%;">Mes</th>
+            <th style="width: 20%;">Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th></th>
+        {% for det in pay.payinvoice_set.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ det.cli.name }}</td>
+                <td class="text-center"> Factura</td>
+                <td class="text-right">{{ det.invoice.id }}</td>
+                <td class="text-right">{{ det.invoice.date_joined|date:'F y' }}</td>
+                <td class="text-right">{{ det.total }}</td>
+            </tr>
+        {% endfor %}
+        <th></th>
+        {% for det in pay.paysale_set.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ det.cli.name }}</td>
+                <td class="text-center"> Venta</td>
+                <td class="text-right">{{ det.sale.id }}</td>
+                <td class="text-right">{{ det.sale.date_joined|date:'j-m-y' }}</td>
+                <td class="text-right">{{ det.total }}</td>
+            </tr>
+        {% endfor %}
+        <th></th>
+
+        <tr>
+            <td colspan="5" class="text-right border-0"><b>TOTAL COBRADO:</b></td>
+            <td class="text-right border-0 font-weight-bold">$ {{ pay.total|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right border-0 small"><b>Efectivo:</b></td>
+            <td class="text-right border-0 small">$ {{ pay.efectivo|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-right border-0 small"><b>Cheque:</b></td>
+            <td class="text-right border-0 small">$ {{ pay.cheque|floatformat:2 }}</td>
+        </tr>
+        <th></th>
+        <tr>
+            <td colspan="6">
+                <br>
+                <p class="font-weight-bold text-center">
+                    Facturas cobradas: {{ pay.payinvoice_set.all.count }}</p>
+                <p class="font-weight-bold text-center">
+                    Ventas cobradas: {{ pay.paysale_set.all.count }}</p>
+                <br>
+                <p class="font-italic text-center">
+                    Recibos registrados con Exito<br>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

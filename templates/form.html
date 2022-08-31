@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <form method="post" action="" enctype="multipart/form-data" name="form">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {% if action == 'add' %}
+                        <i class="fas fa-plus-circle"></i>
+                    {% else %}
+                        <i class="fas fa-edit"></i>
+                    {% endif %}
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                {#            variable action recibida del context data para luego enviarla a a traves del metodo post#}
+                {#            necesario para utilizar la tecnologia ajax#}
+                <input type="hidden" name="action" value="{{ action }}">
+                {#            itera los campos del formulario para luego personalizar los campos#}
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al crear un cliente</h5>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% block field_enable %}
+
+                {% endblock %}
+                {% for field in form.visible_fields %}
+                    {% if field.label != 'Habilitado' and field.label != 'Activado' %}
+                        <div class="form-group">
+                            <label for="email"> {{ field.label }}:</label>
+                            {{ field }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% block field_edit %}
+
+                {% endblock %}
+
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                    Guardar {{ entity }}
+                </button>
+                <a href="{{ list_url }}" class="btn btn-danger "><i class="fas fa-times"></i>
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        {#codigo para la notificacion sweetAlert#}
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {#coontrolando errores provenientes del forms que no pertenecen al componente#}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                text: errors,
+                confirmButtonText: 'Reintentar'
+            });
+        {% endif %}
+
+        {#codigo ajax para acceder al evento del boton submit (guardar registro) del formulario form#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            console.log(parameters);
+            {#parameters.append("enable", status);#}
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de actualizar el siguiente elemento?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+
+    </script>
+
+{% endblock %}

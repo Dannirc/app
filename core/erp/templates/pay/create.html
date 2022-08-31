@@ -1,0 +1,134 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    {#    jquery ui (para utilizar el autocomplete en el buscador) #}
+    <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    {#    libs select2#}
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+    {#    libs moments y tempusdominus#}
+    <script src="{% static 'lib/moment-2.25.3/moment-with-locales.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <link href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet"/>
+    {#    lib touchspin#}
+    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+    {#    functions#}
+    <script src="{% static 'pay/js/form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {#    debe estar dentro de un formulario para que se envien los datos a la views por el metodo post#}
+    <form method="post">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-search"></i>
+                    {{ title }} | {{ date_now }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-boxes"></i> Detalle de Cobranza</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Buscador de Facturas:</label>
+                                    <div class="input-group">
+                                        <select class="form-control select2" style="width: 100%" name="search" id="search">
+
+                                        </select>
+                                        <br><br>
+                                        <select class="form-control select2" style="width: 100%" name="search_invoice" id="search_invoice">
+
+                                        </select>
+
+                                        {#                                        <input type="text" class="form-control" name="search"#}
+                                        {#                                               placeholder="Ingrese un Producto" autocomplete="off">#}
+                                        {#                                        <span class="input-group-append">#}
+                                        {#                                        <button type="button" class="btn btn-danger btn-flat btnClearSearch">#}
+                                        {#                                            <i class="fas fa-times"></i>#}
+                                        {#                                        </button>#}
+                                        {#                                        </span>#}
+                                    </div>
+                                </div>
+                                <hr>
+                                <button type="button" class="btn btn-danger btn-xs btn-flat btnRemoveAll">
+                                    <i class="fas fa-trash"></i> Eliminar todos los pagos
+                                </button>
+                                <hr>
+                                <table class="table" id="tblProducts">
+                                    <thead>
+                                    <tr>
+                                        <th>Eliminar</th>
+                                        <th>Cliente</th>
+                                        <th>Concepto</th>
+                                        <th>Nro Fc</th>
+                                        <th>Detalle</th>
+                                        <th>Importe</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Datos de la Cobranza</h3>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" name="action" value="{{ action }}">
+                                <div class="form-group">
+                                    <label>Fecha de Cobranza:</label>
+                                    {{ form.date_pay }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Tecnico:</label>
+                                    {{ form.tecnic }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Zona Realizada:</label>
+                                    {{ form.zone }}
+                                </div>
+                                <hr>
+                                <div class="form-group" id="count_invoice">
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label>Cheque:</label>
+                                    {{ form.cheque }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Efectivo:</label>
+                                    <input type="text" class="form-control" readonly name="efectivo" value="0.00">
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label>Total:</label>
+                                    <input type="text" class="form-control" readonly name="total" value="0.00">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-flat"><i class="fas fa-save"></i>
+                    Guardar {{ entity }}
+                </button>
+                <a href="{{ list_url }}" class="btn btn-danger btn-flat"><i class="fas fa-times"></i>
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

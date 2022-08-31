@@ -1,0 +1,56 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'equipRemove/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%">ID</th>
+        <th scope="col" style="width: 15%">Fecha</th>
+        <th scope="col" style="width: 35%">Nombre</th>
+        <th scope="col" style="width: 10%">Od</th>
+        <th scope="col" style="width: 10%">Aer</th>
+        <th scope="col" style="width: 10%">Got</th>
+        <th scope="col" style="width: 15%">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+
+    <div class="modal" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="removeModalContent">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-list-ol"></i> Confirmacion de Equipos Retirados: <span
+                            id="serviceDownClient"></span></h5>
+                    <input type="hidden" id="serviceDownClientId" value="">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="selectCantOdo">Odorizadores: </label>
+                    <select name="selectCantOdo" id="selectCantOdo">
+                    </select>
+                    <label for="selectCantAer">Aerosoles: </label>
+                    <select name="selectCantAer" id="selectCantAer">
+                    </select>
+                    <label for="selectCantGot">Goteos: </label>
+                    <select name="selectCantGot" id="selectCantGot">
+                    </select>
+                    <br>
+                    <a id="serviceDownConfirm" class="btn btn-primary">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{#bloque para cargar la funcion para listar los clientes#}
+{% block head_list %}
+    <script src="{% static 'invoice/js/list.js' %}"></script>
+
+    {#   lib datetimerange#}
+    <script type="text/javascript" src="{% static 'lib/moment-2.25.3/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/daterangepicker-3.1/daterangepicker.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/daterangepicker-3.1/daterangepicker.css' %}"/>
+{% endblock %}
+
+{% block filterDataTable %}
+    <div class="card-header">
+    <label for="input_date">Rango de Fechas: </label>
+    <input type="text" class="form-control small" style="max-width: 200px" name="input_date" id="input_date"/>
+    </div>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 1%"></th>
+        <th scope="col" style="width: 2%">Nro</th>
+        <th scope="col" style="width: 15%">Cliente</th>
+        <th scope="col" style="width: 10%">Fecha de registro</th>
+        <th scope="col" style="width: 5%">Subtotal</th>
+        <th scope="col" style="width: 5%">Iva</th>
+        <th scope="col" style="width: 5%">Total</th>
+        <th scope="col" style="width: 5%">Cobrada</th>
+        <th scope="col" style="width: 10%">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+    <div class="modal fade" id="myModelDet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titletblDet"><i class="fas fa-shopping-cart"></i> Consulta de
+                        detalle de factura {{ id }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="tblDet">
+                        <thead>
+                        <tr>
+                            <th width="200px">Producto</th>
+                            <th width="100px">Precio</th>
+                            <th class="text-left" width="20px">Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

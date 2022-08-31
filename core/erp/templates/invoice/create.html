@@ -1,0 +1,27 @@
+{% extends 'form.html' %}
+{% load static %}
+
+{% block field_enable %}
+
+    <label for="company"> Empresa:</label>
+    <select class="form-control" name="company" id="company">
+        <option value="0" selected>Ache&L</option>
+    </select>
+
+    <label for="select_tecnic"> Técnico:</label>
+    <select class="form-control" name="select_tecnic" id="select_tecnic">
+        <option value="0" selected>Todos</option>
+    </select>
+
+    <label for="select_zone"> Zona:</label>
+    <select class="form-control" name="select_zone" id="select_zone">
+        <option value="0" selected>Todos</option>
+    </select>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{% static 'invoice/js/create.js' %}"></script>
+
+{% endblock %}
