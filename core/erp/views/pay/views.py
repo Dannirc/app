@@ -29,7 +29,8 @@ class PayListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView)
     model = Pay
     template_name = 'pay/list.html'
 
-    locale.setlocale(locale.LC_TIME, "es_AR.utf8")
+    # locale.setlocale(locale.LC_TIME, "es_AR.utf8")
+    locale.setlocale(locale.LC_TIME, "es_AR")
 
     # Ejemplo de filtro
     # def get_queryset(self):
