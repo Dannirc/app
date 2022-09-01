@@ -104,7 +104,7 @@ import dj_database_url
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/app', conn_max_age=600)
+    'default': dj_database_url.config(default='postgres://danni:EGSRO78I7IKyV21irBXCM8IYA0ZRmwAW@dpg-cc82k9pgp3jo5oogu9r0-a/db_h19m', conn_max_age=600)
     }
 
 # Password validation
