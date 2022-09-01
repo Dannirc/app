@@ -163,7 +163,7 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'user.User'
 
 # Variable cuando utilizamos whitenoise en deploy
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # variable para autocompletar primary key (nueva actualizacion en Django 3.2)
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
